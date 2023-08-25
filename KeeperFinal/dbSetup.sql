@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS accounts(
   name varchar(255) COMMENT 'User Name',
   email varchar(255) COMMENT 'User Email',
   picture varchar(255) COMMENT 'User Picture',
-  coverImg VARCHAR(255) COMMENT 'User CoverImg'
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE keeps(
@@ -16,6 +15,7 @@ CREATE TABLE keeps(
   description VARCHAR (500) NOT NULL,
   img VARCHAR (500) NOt NULL,
   views INT NOT NULL DEFAULT 0,
+  kept INT NOT NULL DEFAULT 0,
   creatorId VARCHAR(255) NOT NUll,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
