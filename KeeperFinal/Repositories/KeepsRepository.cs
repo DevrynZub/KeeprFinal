@@ -2,28 +2,28 @@ namespace KeeperFinal.Repositories;
 public class KeepsRepository
 {
   private readonly IDbConnection _db;
-  
+
   public KeepsRepository(IDbConnection db)
   {
     _db = db;
   }
 
-    internal int CreateKeep(Keep keepData)
-    {
-      string sql = @"
+  internal int CreateKeep(Keep keepData)
+  {
+    string sql = @"
       INSERT INTO keeps (name, description, img, views, creatorId)
       VALUES(@Name, @Description, @Img, @Views, @CreatorId);
       SELECT LAST_INSERT_ID()  
       ;";
 
-      int keepId = _db.ExecuteScalar<int>(sql, keepData);
-      
-      return keepId;
-    }
+    int keepId = _db.ExecuteScalar<int>(sql, keepData);
 
-    internal Keep GetKeepById(int keepId)
-    {
-      string sql = @"
+    return keepId;
+  }
+
+  internal Keep GetKeepById(int keepId)
+  {
+    string sql = @"
       SELECT
       kee. *,
       acc.*
@@ -41,14 +41,14 @@ public class KeepsRepository
       },
       new { keepId }
     ).FirstOrDefault();
-    
+
     return keep;
 
-    }
+  }
 
   internal List<Keep> GetKeeps()
-    {
-string sql = @"
+  {
+    string sql = @"
   SELECT
   kee. *,
   acc.*
@@ -56,15 +56,35 @@ string sql = @"
   JOIN accounts acc ON acc.id = kee.creatorId
   ;";
 
-List<Keep> keeps = _db.Query<Keep, Profile, Keep>(
+    List<Keep> keeps = _db.Query<Keep, Profile, Keep>(
   sql,
   (keep, profile) =>
   {
     keep.Creator = profile;
     return keep;
   }
-).ToList();
-return keeps;
+  ).ToList();
+    return keeps;
   }
+
+  internal Keep UpdateKeep(Keep originalKeep)
+  {
+    string sql = @"
+    UPDATE keeps
+    SET
+    name = @Name
+    description = @Description
+    WHERE id = @Id
+    LIMIT 1; 
+     SELECT * FROM keeps WHERE id = @Id
+    ;";
+
+    Keep updateKeep = _db.QueryFirstOrDefault<Keep>(sql, originalKeep);
+
+    return updateKeep;
+
+
+  }
+
 }
 
