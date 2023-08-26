@@ -62,7 +62,7 @@ public class VaultsController : ControllerBase
     }
   }
 
-  [HttpDelete]
+  [HttpDelete("{vaultId}")]
   [Authorize]
   public async Task<ActionResult<string>> RemoveVault(int vaultId)
   {

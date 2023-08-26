@@ -53,14 +53,9 @@ WHERE v.id = @vaultId
 
     _db.Execute(sql, originalVault);
   }
-
-
-
-
-
-
   internal void RemoveVault(int vaultId)
   {
-    throw new NotImplementedException();
+    string sql = "DELETE FROM vaults where id = @vaultId LIMIT 1;";
+    _db.Execute(sql, new { vaultId });
   }
 }
