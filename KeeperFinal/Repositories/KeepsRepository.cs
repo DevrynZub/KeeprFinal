@@ -72,7 +72,7 @@ public class KeepsRepository
     string sql = @"
     UPDATE keeps
     SET
-    name = @Name
+    name = @Name,
     description = @Description
     WHERE id = @Id
     LIMIT 1; 
@@ -82,8 +82,12 @@ public class KeepsRepository
     Keep updateKeep = _db.QueryFirstOrDefault<Keep>(sql, originalKeep);
 
     return updateKeep;
+  }
 
-
+  internal void RemoveKeep(int keepId)
+  {
+    string sql = "DELETE FROM keeps WHERE id = @keepId LIMIT 1;";
+    _db.Execute(sql, new { keepId });
   }
 
 }
