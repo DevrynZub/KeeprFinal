@@ -30,8 +30,7 @@ CREATE TABLE vaults(
   isPrivate BOOLEAN DEFAULT False,
   keepId INT NOT NULL,
   creatorId VARCHAR(255) NOT NUll,
-  FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
-  FOREIGN KEY(keepId) REFERENCES keeps(id) ON DELETE CASCADE
+  FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )default charset utf8 COMMENT '';\
 
 CREATE TABLE vaultkeeps(
