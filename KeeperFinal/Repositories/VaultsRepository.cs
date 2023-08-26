@@ -39,4 +39,28 @@ WHERE v.id = @vaultId
     }, new { vaultId }).FirstOrDefault();
     return vault;
   }
+
+
+  internal void UpdateVault(Vault originalVault)
+  {
+    string sql = @"
+    UPDATE vaults
+    SET
+    name = @Name,
+    isPrivate = @IsPrivate
+    WHERE id = @Id
+    ;";
+
+    _db.Execute(sql, originalVault);
+  }
+
+
+
+
+
+
+  internal void RemoveVault(int vaultId)
+  {
+    throw new NotImplementedException();
+  }
 }

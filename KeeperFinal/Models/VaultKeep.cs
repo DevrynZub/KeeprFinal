@@ -1,8 +1,8 @@
 
-public class VaultKeep{
-public string Id { get; set; }
-public string KeepId { get; set; }
-public string VaultId { get; set; }
-public string CreatorId { get; set; }
+public class VaultKeep : RepoItem<int>
+{
+  public int KeepId { get; set; }
+  public int VaultId { get; set; }
+  public string CreatorId { get; set; }
 
 }
