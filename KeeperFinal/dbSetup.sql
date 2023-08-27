@@ -33,23 +33,25 @@ CREATE TABLE vaults(
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )default charset utf8 COMMENT '';\
 
-CREATE TABLE vaultkeeps(
+CREATE TABLE vaultKeeps(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-  creatorId VARCHAR(255) NOT NUll,
+  accountId VARCHAR(255) NOT NULL,
   keepId INT NOT NULL,
   vaultId INT NOT NULL,
-  FOREIGN KEY(vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
-  FOREIGN KEY(keepId) REFERENCES keeps(id) ON DELETE CASCADE
+  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';\
 
 INSERT INTO keeps(name, description, img, views, creatorId)
 VALUES('Naruto anime', 'This may be an obsession with Naruto anime', 'https://images.unsplash.com/photo-1630710478039-9c680b99f800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80', '0', '64e8e541ad74581073a28ba9' )
 
+INSERT INTO vaultKeeps(keepId, vaultId, accountId)
+VALUES('1','1','64e8e541ad74581073a28ba9')
+
 DROP TABLE keeps
 
 DROP TABLE vaults
 
-DROP TABLE vaultkeeps
+DROP TABLE vaultKeeps
 
