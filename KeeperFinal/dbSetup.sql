@@ -40,7 +40,8 @@ CREATE TABLE vaultKeeps(
   accountId VARCHAR(255) NOT NULL,
   keepId INT NOT NULL,
   vaultId INT NOT NULL,
-  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE
+  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+  FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';\
 
 INSERT INTO keeps(name, description, img, views, creatorId)
