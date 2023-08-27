@@ -20,4 +20,14 @@ SELECT LAST_INSERT_ID()
     vaultKeepData.Id = vaultKeepId;
     return vaultKeepData;
   }
+
+  internal void RemoveVaultKeep(int vaultKeepId)
+  {
+    string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1";
+    int rowsAffected = _db.Execute(sql, new { vaultKeepId });
+    if (rowsAffected > 1)
+    {
+      throw new Exception("Oh NOOOOOO");
+    }
+  }
 }

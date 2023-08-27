@@ -15,4 +15,13 @@ public class VaultKeepsService
     VaultKeep vaultKeep = _vaultKeepsRepository.CreateVaultKeep(vaultKeepData);
     return vaultKeep;
   }
+
+  internal string RemoveVaultKeep(int vaultKeepId, string userId)
+  {
+    if (vaultKeepId.AccountId != userId)
+    {
+      throw new Exception("Not your vault");
+    }
+    _vaultKeepsRepository.RemoveVaultKeep(vaultKeepId);
+  }
 }
