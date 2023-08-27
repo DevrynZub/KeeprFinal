@@ -59,7 +59,7 @@ WHERE v.id = @vaultId
     _db.Execute(sql, new { vaultId });
   }
 
-  internal List<Vault> GetMyVaults(string userId)
+  internal List<MyVaults> GetMyVaults(string userId)
   {
     string sql = @"
 SELECT
