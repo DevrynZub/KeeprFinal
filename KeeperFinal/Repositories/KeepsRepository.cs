@@ -90,5 +90,27 @@ public class KeepsRepository
     _db.Execute(sql, new { keepId });
   }
 
+  internal List<Keep> GetKeepsByVaultId(int vaultId)
+  {
+    string sql = @"
+      SELECT
+      kee.*,
+      acc.*
+      FROM keeps kee
+      JOIN accounts acc ON acc.id = kee.creatorId
+      WHERE kee.vaultId = @vaultId
+      ;";
+
+    List<Keep> keeps = _db.Query<Keep, Profile, Keep>
+    (
+      sql,
+      (keep, profile) =>
+      {
+        keep.Creator = profile;
+      },
+      new { vaultId }
+    ).ToList();
+    return keeps;
+  }
 }
 

@@ -10,8 +10,8 @@ public class VaultKeepsRepository
   internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
   {
     string sql = @"
-INSERT INTO vaultKeeps (keepId, vaultId, creatorId)
-VALUES (@KeepId, @vaultId @CreatorId);
+INSERT INTO vaultKeeps (keepId, vaultId, accountId, creatorId)
+VALUES (@KeepId, @VaultId, @AccountId, @CreatorId);
 SELECT LAST_INSERT_ID()
 ;";
 
