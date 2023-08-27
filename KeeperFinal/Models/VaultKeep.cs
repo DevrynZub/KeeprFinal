@@ -6,5 +6,5 @@ public class VaultKeep
   public int VaultId { get; set; }
   public string CreatorId { get; set; }
   public string AccountId { get; set; }
-
 }
+

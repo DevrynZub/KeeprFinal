@@ -34,5 +34,6 @@ public class VaultKeepsService
       throw new Exception("Not your vault");
     }
     _vaultKeepsRepository.RemoveVaultKeep(vaultKeepId);
+    return "VaultKeep Removed.";
   }
 }

@@ -58,4 +58,29 @@ WHERE v.id = @vaultId
     string sql = "DELETE FROM vaults where id = @vaultId LIMIT 1;";
     _db.Execute(sql, new { vaultId });
   }
+
+  internal List<Vault> GetMyVaults(string userId)
+  {
+    string sql = @"
+SELECT
+v.*,
+acc.*
+FROM vaults v
+JOIN accounts acc ON acc.id = v.accountId
+WHERE v.accountId = @userId
+;";
+
+    List<MyVaults> vaults = _db.Query<Vault, MyVaults, Profile, MyVaults>(
+      sql,
+      (vault, vaults, profile) =>
+      {
+        vault.Creator = profile;
+        return vaults;
+      },
+      new { userId }).ToList();
+    return vaults;
+  }
+
+
 }
+

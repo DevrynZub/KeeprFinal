@@ -56,5 +56,9 @@ public class VaultsService
     return "Vault removed";
   }
 
-
+  internal List<Vault> GetMyVaults(string userId)
+  {
+    List<MyVaults> vaults = _vaultsRepository.GetMyVaults(userId);
+    return vaults;
+  }
 }
