@@ -1,3 +1,5 @@
+using System.ComponentModel.Design;
+
 namespace KeeperFinal.Repositories;
 public class VaultKeepsRepository
 {
@@ -19,6 +21,14 @@ SELECT LAST_INSERT_ID()
 
     vaultKeepData.Id = vaultKeepId;
     return vaultKeepData;
+  }
+
+  internal VaultKeep GetVaultKeepById(int vaultKeepId)
+  {
+    string sql = "SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
+
+    VaultKeep vaultKeep = _db.QueryFirstOrDefault<VaultKeep>(sql, new { vaultKeepId });
+    return vaultKeep;
   }
 
   internal void RemoveVaultKeep(int vaultKeepId)
