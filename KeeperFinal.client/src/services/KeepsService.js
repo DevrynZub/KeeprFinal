@@ -12,6 +12,11 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
   }
 
+  setActiveKeep(keep) {
+    AppState.activeKeep = keep
+    logger.log("This is my active keep", AppState.activeKeep)
+  }
+
 
 }
 
