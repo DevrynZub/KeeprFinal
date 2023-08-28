@@ -28,7 +28,6 @@ CREATE TABLE vaults(
   description VARCHAR (500) NOT NULL,
   img VARCHAR (500) NOt NULL,
   isPrivate BOOLEAN DEFAULT False,
-  keepId INT NOT NULL,
   creatorId VARCHAR(255) NOT NUll,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )default charset utf8 COMMENT '';
@@ -48,8 +47,8 @@ CREATE TABLE vaultKeeps(
 INSERT INTO keeps(name, description, img, views, creatorId)
 VALUES('Naruto anime', 'This may be an obsession with Naruto anime', 'https://images.unsplash.com/photo-1630710478039-9c680b99f800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80', '0', '64e8e541ad74581073a28ba9' )
 
-INSERT INTO vaultKeeps(keepId, vaultId, creatorId, accountId)
-VALUES('1','1','64e8e541ad74581073a28ba9','64e8e541ad74581073a28ba9')
+INSERT INTO vaultKeeps(vaultId, creatorId, accountId)
+VALUES('1','64e8e541ad74581073a28ba9','64e8e541ad74581073a28ba9')
 
 DROP TABLE keeps
 
