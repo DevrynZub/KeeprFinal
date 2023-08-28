@@ -67,7 +67,7 @@ public class KeepsRepository
     return keeps;
   }
 
-  internal Keep UpdateKeep(Keep originalKeep)
+  internal void UpdateKeep(Keep originalKeep)
   {
     string sql = @"
     UPDATE keeps
@@ -79,9 +79,7 @@ public class KeepsRepository
      SELECT * FROM keeps WHERE id = @Id
     ;";
 
-    Keep updateKeep = _db.QueryFirstOrDefault<Keep>(sql, originalKeep);
-
-    return updateKeep;
+    _db.Execute(sql, originalKeep);
   }
 
   internal void RemoveKeep(int keepId)

@@ -22,7 +22,7 @@ public class KeepsService
     return keep;
   }
 
-  internal Keep GetKeepById(int keepId)
+  internal Keep GetKeepById(int keepId, string userId = null)
   {
     Keep keep = _keepsRepository.GetKeepById(keepId);
     if (keep == null)
@@ -49,15 +49,20 @@ public class KeepsService
     return "Keep removed";
   }
 
-  internal Keep UpdateKeep(int keepId, Keep keepData)
+  internal Keep UpdateKeep(Keep keepData, string userId)
   {
-    Keep originalKeep = GetKeepById(keepId);
+    Keep originalKeep = GetKeepById(keepData.Id, userId);
+    if (originalKeep.CreatorId != userId)
+    {
+      throw new Exception("NOT YOUR KEEP BUDDY!");
+    }
 
     originalKeep.Name = keepData.Name ?? originalKeep.Name;
     originalKeep.Description = keepData.Description ?? originalKeep.Description;
 
-    Keep keep = _keepsRepository.UpdateKeep(originalKeep);
-    return keep;
+    _keepsRepository.UpdateKeep(originalKeep);
+
+    return originalKeep;
   }
 }
 
