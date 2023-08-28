@@ -1,11 +1,18 @@
 namespace KeeperFinal.Repositories;
 public class ProfilesRepository
 {
+  private readonly IDbConnection _db;
+
+  public ProfilesRepository(IDbConnection db)
+  {
+    _db = db;
+  }
+
   internal Profile GetProfileById(int profileId)
   {
     string sql = @"
 SELECT
-pro.*,
+p.*,
 acc.*
 FROM profile pro
 JOIN accounts acc ON acc.id = pro.creatorId
@@ -16,11 +23,11 @@ WHERE pro.id = @profileId
   sql,
   (profile, account) =>
   {
-    profile.Creator = account;
+    profile.Id = account.Id;
     return profile;
   },
   new { profileId }
-).FirstOrDefault();
+  ).FirstOrDefault();
     return profile;
   }
 }

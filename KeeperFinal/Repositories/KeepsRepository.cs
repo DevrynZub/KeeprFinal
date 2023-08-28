@@ -94,22 +94,16 @@ public class KeepsRepository
   {
     string sql = @"
       SELECT
-      v.*,
-      acc.*
-      FROM vaults v
-      JOIN accounts acc ON acc.id = v.creatorId
-      WHERE v.keepId = @vaultId
+      k.*
+      FROM vaultKeeps vk
+      JOIN keeps k ON k.id = vk.keepId
+      WHERE vk.vaultId = @vaultId
       ;";
 
-    List<Keep> keeps = _db.Query<Keep, Vault, Keep>(
+    List<Keep> keeps = _db.Query<Keep>(
       sql,
-      (keep, vault) =>
-      {
-        vault.KeepId = keep.Id;
-        return keep;
-      },
       new { vaultId }
-    ).ToList();
+      ).ToList();
     return keeps;
   }
 }

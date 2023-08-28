@@ -29,7 +29,7 @@ public class VaultKeepsService
   internal string RemoveVaultKeep(int vaultKeepId, string userId)
   {
     VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
-    if (vaultKeepId.AccountId != userId)
+    if (vaultKeep.AccountId != userId)
     {
       throw new Exception("Not your vault");
     }
