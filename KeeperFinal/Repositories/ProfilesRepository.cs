@@ -8,26 +8,10 @@ public class ProfilesRepository
     _db = db;
   }
 
-  internal Profile GetProfileById(int profileId)
+  internal Profile GetProfileById(string profileId)
   {
     string sql = @"
-SELECT
-p.*,
-acc.*
-FROM profile pro
-JOIN accounts acc ON acc.id = pro.creatorId
-WHERE pro.id = @profileId
-;";
-
-    Profile profile = _db.Query<Profile, Account, Profile>(
-  sql,
-  (profile, account) =>
-  {
-    profile.Id = account.Id;
-    return profile;
-  },
-  new { profileId }
-  ).FirstOrDefault();
-    return profile;
+    SELECT * FROM accounts WHERE id = @profileId LIMIT 1;";
+    return _db.QueryFirstOrDefault<Profile>(sql, new { profileId });
   }
 }

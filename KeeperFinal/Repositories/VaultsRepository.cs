@@ -31,7 +31,8 @@ FROM vaults v
 JOIN accounts acc On acc.id = v.creatorId
 WHERE v.id = @vaultId
 ;";
-    Vault vault = _db.Query<Vault, Profile, Vault>(sql,
+    Vault vault = _db.Query<Vault, Profile, Vault>(
+    sql,
     (vault, profile) =>
     {
       vault.Creator = profile;
@@ -57,6 +58,25 @@ WHERE v.id = @vaultId
   {
     string sql = "DELETE FROM vaults where id = @vaultId LIMIT 1;";
     _db.Execute(sql, new { vaultId });
+  }
+
+  internal List<Vault> GetProfileVaults(string profileId)
+  {
+    string sql = @"
+      SELECT
+      v.*,
+      acc.*
+      FROM vaults v
+      JOIN accounts acc ON v.creatorId = acc.id
+      WHERE v.creatorId = @profileId
+      ;";
+    return _db.Query<Vault, Profile, Vault>(
+      sql,
+      (vault, profile) =>
+      {
+        vault.Creator = profile;
+        return vault;
+      }, new { profileId }).ToList();
   }
 
   //   internal List<MyVaults> GetMyVaults(string userId)
