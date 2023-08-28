@@ -36,4 +36,29 @@ SELECT LAST_INSERT_ID()
     string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1";
     _db.Execute(sql, new { vaultKeepId });
   }
+
+
+  internal List<KeepCollaboration> GetKeepsByVaultId(int vaultId)
+  {
+    string sql = @"
+    SELECT
+      vK.*,
+      k.*,
+      acc.*
+      FROM vaultKeeps vK
+      JOIN keeps k ON vK.keepId = k.id
+      JOIN accounts acc ON k.creatorId = acc.id
+      WHERE vK.vaultId = @vaultId
+    ; ";
+
+    List<KeepCollaboration> keeps = _db.Query<VaultKeep, KeepCollaboration, Account, KeepCollaboration>(
+      sql,
+      (vaultKeep, keep, account) =>
+    {
+      keep.Creator = account;
+      keep.VaultKeepId = vaultKeep.Id;
+      return keep;
+    }, new { vaultId }).ToList();
+    return keeps;
+  }
 }

@@ -36,4 +36,10 @@ public class VaultKeepsService
     _vaultKeepsRepository.RemoveVaultKeep(vaultKeepId);
     return "VaultKeep Removed.";
   }
+
+  internal List<KeepCollaboration> GetKeepsByVaultId(int vaultId)
+  {
+    List<KeepCollaboration> keepCollaborations = _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
+    return keepCollaborations;
+  }
 }

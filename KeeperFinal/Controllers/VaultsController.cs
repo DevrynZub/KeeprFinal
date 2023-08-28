@@ -7,12 +7,15 @@ public class VaultsController : ControllerBase
   private readonly VaultsService _vaultsService;
   private readonly KeepsService _keepsService;
   private readonly Auth0Provider _auth0Provider;
+  private readonly VaultKeepsService _vaultKeepsService;
 
-  public VaultsController(VaultsService vaultsService, KeepsService keepsService, Auth0Provider auth0Provider)
+  public VaultsController(VaultsService vaultsService, KeepsService keepsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService)
   {
     _vaultsService = vaultsService;
     _keepsService = keepsService;
     _auth0Provider = auth0Provider;
+    _vaultKeepsService = vaultKeepsService;
+
   }
 
   [Authorize]
@@ -81,13 +84,12 @@ public class VaultsController : ControllerBase
   }
 
   [HttpGet("{vaultId}/keeps")]
-  public async Task<ActionResult<List<Keep>>> GetKeepsByVaultId(int vaultId)
+  public ActionResult<List<KeepCollaboration>> GetKeepsByVaultId(int vaultId)
   {
     try
     {
-      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      List<Keep> keeps = _keepsService.GetKeepsByVaultId(vaultId);
-      return Ok(keeps);
+      List<KeepCollaboration> keepCollaborations = _vaultKeepsService.GetKeepsByVaultId(vaultId);
+      return Ok(keepCollaborations);
     }
     catch (Exception e)
     {

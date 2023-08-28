@@ -59,27 +59,27 @@ WHERE v.id = @vaultId
     _db.Execute(sql, new { vaultId });
   }
 
-  internal List<MyVaults> GetMyVaults(string userId)
-  {
-    string sql = @"
-SELECT
-v.*,
-acc.*
-FROM vaults v
-JOIN accounts acc ON acc.id = v.accountId
-WHERE v.accountId = @userId
-;";
+  //   internal List<MyVaults> GetMyVaults(string userId)
+  //   {
+  //     string sql = @"
+  //     SELECT
+  //     vau.*,
+  //     acc.*
+  //     FROM vaults vau
+  //     JOIN accounts acc ON acc.id = vau.creatorId
+  //     WHERE vau.accountId = @userId
+  // ;";
 
-    List<MyVaults> vaults = _db.Query<Vault, MyVaults, Profile, MyVaults>(
-      sql,
-      (vault, vaults, profile) =>
-      {
-        vault.Creator = profile;
-        return vaults;
-      },
-      new { userId }).ToList();
-    return vaults;
-  }
+  //     List<MyVaults> vaults = _db.Query<Vault, MyVaults, Profile, MyVaults>(
+  //       sql,
+  //       (vault, myVaults, profile) =>
+  //       {
+  //         vault.Creator = profile;
+  //         return vaultId;
+  //       },
+  //       new { userId }).ToList();
+  //     return vaults;
+  //   }
 
 
 }

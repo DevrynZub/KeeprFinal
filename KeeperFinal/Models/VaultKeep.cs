@@ -1,4 +1,4 @@
-
+namespace KeeperFinal.Models;
 public class VaultKeep
 {
   public int Id { get; set; }
@@ -7,4 +7,5 @@ public class VaultKeep
   public string CreatorId { get; set; }
   public string AccountId { get; set; }
 }
+
 
