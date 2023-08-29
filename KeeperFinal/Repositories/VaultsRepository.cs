@@ -78,29 +78,4 @@ WHERE v.id = @vaultId
         return vault;
       }, new { profileId }).ToList();
   }
-
-  //   internal List<MyVaults> GetMyVaults(string userId)
-  //   {
-  //     string sql = @"
-  //     SELECT
-  //     vau.*,
-  //     acc.*
-  //     FROM vaults vau
-  //     JOIN accounts acc ON acc.id = vau.creatorId
-  //     WHERE vau.accountId = @userId
-  // ;";
-
-  //     List<MyVaults> vaults = _db.Query<Vault, MyVaults, Profile, MyVaults>(
-  //       sql,
-  //       (vault, myVaults, profile) =>
-  //       {
-  //         vault.Creator = profile;
-  //         return vaultId;
-  //       },
-  //       new { userId }).ToList();
-  //     return vaults;
-  //   }
-
-
 }
-

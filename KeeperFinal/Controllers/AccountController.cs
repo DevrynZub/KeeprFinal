@@ -32,12 +32,12 @@ public class AccountController : ControllerBase
 
   [Authorize]
   [HttpGet("vaults")]
-  public async Task<ActionResult<List<MyVaults>>> GetMyVaults()
+  public async Task<ActionResult<List<Vault>>> GetMyVaults(string userId)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      List<MyVaults> vaults = _vaultsService.GetMyVaults(userInfo.Id);
+      List<Vault> vaults = _accountService.GetMyVaults(userInfo.Id);
       return Ok(vaults);
     }
     catch (Exception e)
