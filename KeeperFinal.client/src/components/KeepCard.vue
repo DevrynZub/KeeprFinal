@@ -1,13 +1,12 @@
 <template>
   <div @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails" class="keep-card">
     <div class="keep-image" :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
+      <h3 class="keep-name elevation">{{ keepProp.name }}</h3>
+      <img :src="keepProp.creator.picture" :alt="keepProp.name" class="keep-img">
     </div>
-    <!-- <div class="keep-info">
-      <h4 class="keep-creator">{{ keepProp.creator }}</h4>
-      <h3 class="keep-name">{{ keepProp.name }}</h3>
-    </div> -->
   </div>
 </template>
+
 
 
 <script>
@@ -47,8 +46,20 @@ export default {
   align-items: center;
   background-color: #f5f5f5;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(134, 52, 52, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.keep-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  padding: 5px 10px;
+  // font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 5px;
+  // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .keep-card:hover {
@@ -58,35 +69,13 @@ export default {
 
 .keep-image {
   width: 100%;
-  height: 200px;
+  padding-top: 75%;
   background-size: cover;
-  background-position: center;
-  border-radius: 8px 8px 0 0;
   position: relative;
-}
-
-.like-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  color: #00a86b;
-  transition: color 0.2s;
-}
-
-.like-icon.liked {
-  color: #ff5a5f;
 }
 
 .keep-info {
   padding: 16px;
   text-align: center;
-}
-
-.keep-name {
-  color: #333;
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
 }
 </style>

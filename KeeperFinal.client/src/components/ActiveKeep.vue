@@ -2,15 +2,27 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6 col-12 d-flex ps-0">
-        <img class="img-fluid rounded-start" :src="keep.img" alt="KEEP">
+        <img class="img-fluid rounded-start keep-image" :src="keep.img" alt="KEEP">
       </div>
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12 d-flex align-items-center">
         <div class="row">
           <div class="col-12 fs-3">
-            <p>Keep Name: {{ keep.name }}</p>
-            <p class="description rounded px-1">{{ name.description }}</p>
+            <div class="d-flex justify-content-evenly mb-3">
+              <p class="mdi mdi-eye-outline">{{ keep.views }}</p>
+              <p class="mdi mdi-safe">{{ keep.kept }}</p>
+            </div>
+
+            <div class="text-center">
+              <p class="keep-name">{{ keep.name }}</p>
+              <p class="description rounded px-1">{{ keep.description }}</p>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <!-- Save button and dropdown menu here -->
       </div>
     </div>
   </div>
@@ -36,17 +48,14 @@ export default {
 
 
 <style lang="scss" scoped>
-.img {
-  max-height: 60vh;
+.keep-image {
+  width: 100%;
+  object-fit: cover;
 }
 
-.description {
-  background-color: gray;
-  color: white;
-}
-
-
-.description {
-  max-width: 40vh;
+.keep-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>

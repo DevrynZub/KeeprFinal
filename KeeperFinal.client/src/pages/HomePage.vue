@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+      </div>
+    </div>
     <div class="row p-2">
       <div class="col-md-4 col-12 mb-3" v-for="keep in keeps" :key="keep.id">
         <KeepCard :keepProp="keep" />
@@ -17,6 +21,8 @@ import KeepCard from '../components/KeepCard.vue';
 
 export default {
   setup() {
+
+
     async function getKeeps() {
       try {
         await keepsService.getKeeps();
@@ -25,6 +31,7 @@ export default {
         Pop.error('[Error]', error.message);
       }
     }
+
     onMounted(() => {
       getKeeps();
     });
