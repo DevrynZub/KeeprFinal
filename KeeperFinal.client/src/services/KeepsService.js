@@ -19,9 +19,15 @@ class KeepsService {
 
   async createKeep(keepData) {
     const res = await api.post('api/keeps', keepData)
-    logger.log('[THIS MY KEEP]', res.data)
+    logger.log('[CREATED KEEP]', res.data)
     const newKeep = new Keep(res.data)
     AppState.keeps.push(newKeep)
+  }
+
+  async getKeepsByProfileId(profileId) {
+    const res = await api.get(`api/profiles/${profileId}/keeps`)
+    logger.log('[AM I GETTING KEEPS?]', res.data)
+    AppState.keeps = res.data.map(k => new Keep(k))
   }
 
 

@@ -10,12 +10,22 @@
       <ActiveKeep />
     </template>
   </XLModal>
+
+  <ModalComponent id="editAccount">
+    <template #modalHeader>
+      Update Account
+    </template>
+    <template #modalBody>
+      <UpdateAccount />
+    </template>
+  </ModalComponent>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import UpdateAccount from './components/UpdateAccount.vue'
 
 export default {
   setup() {
@@ -23,7 +33,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, UpdateAccount }
 }
 </script>
 <style lang="scss">

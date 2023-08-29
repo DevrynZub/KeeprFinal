@@ -1,18 +1,54 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+  <div class="container-fluid account-page">
+    <div class="text-center">
+      <button v-if="account.id" class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+        data-bs-target="#editAccount">
+        Update Account
+      </button>
+    </div>
+    <div class="row justify-content-around">
+      <div class="col-11 col-md-3 mb-5">
+        <div class="m-2 text-center">
+          <img :src="account.picture" alt="profile">
+          <div>
+            <p class="card-text">{{ account.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
+import Pop from '../utils/Pop.js';
+import { vaultService } from '../services/VaultService.js';
 export default {
   setup() {
+    const account = ref({})
+    const editable = ref({})
+
+    async function getVaultsByAccount() {
+      try {
+        const accountId = account.value.id;
+        await vaultService.getVaultsByAccount(accountId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+
+    onMounted(() => {
+      getVaultsByAccount();
+
+    })
+
+
     return {
-      account: computed(() => AppState.account)
+      editable,
+      account: computed(() => AppState.account),
+      vaults: computed(() => AppState.vaults),
+
     }
   }
 }

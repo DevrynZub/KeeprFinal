@@ -53,10 +53,12 @@ public class AccountsRepository
       FROM vaults v
       JOIN accounts a ON v.creatorId = a.id
       WHERE v.creatorId = @id;";
-    return _db.Query<Vault, Profile, Vault>(sql, (v, profile) =>
+    return _db.Query<Vault, Profile, Vault>(
+      sql,
+      (vault, profile) =>
     {
-      v.Creator = profile;
-      return v;
+      vault.Creator = profile;
+      return vault;
     }, new { accountId }).ToList();
   }
 }

@@ -2,7 +2,7 @@
   <div @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails" class="keep-card">
     <div class="keep-image" :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
       <h3 class="keep-name elevation">{{ keepProp.name }}</h3>
-      <img :src="keepProp.creator.picture" :alt="keepProp.name" class="keep-img">
+      <img :src="keepProp.creator.picture" class="keep-profile">
     </div>
   </div>
 </template>
@@ -77,5 +77,16 @@ export default {
 .keep-info {
   padding: 16px;
   text-align: center;
+}
+
+.keep-profile {
+  height: 10vh;
+  width: 10vh;
+  justify-content: end;
+  border-radius: 70%;
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 18px;
 }
 </style>
