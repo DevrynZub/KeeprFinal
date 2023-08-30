@@ -33,11 +33,12 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet("{keepId}")]
-  public ActionResult<Keep> GetKeepById(int keepId)
+  public async Task<ActionResult<Keep>> GetKeepById(int keepId)
   {
     try
     {
-      Keep keep = _keepsService.GetKeepById(keepId);
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Keep keep = _keepsService.GetKeepByIdAndIncreaseViews(keepId, userInfo?.Id);
       return Ok(keep);
     }
     catch (Exception e)
@@ -47,10 +48,11 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet]
-  public ActionResult<List<Keep>> GetKeeps()
+  public async Task<ActionResult<List<Keep>>> GetKeeps()
   {
     try
     {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       List<Keep> keeps = _keepsService.GetKeeps();
       return Ok(keeps);
     }
@@ -77,15 +79,15 @@ public class KeepsController : ControllerBase
     }
   }
 
-  [HttpDelete("{keepId}")]
   [Authorize]
+  [HttpDelete("{keepId}")]
   public async Task<ActionResult<string>> RemoveKeep(int keepId)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      string message = _keepsService.RemoveKeep(keepId, userInfo.Id);
-      return Ok(message);
+      Keep keep = _keepsService.RemoveKeep(keepId, userInfo.Id);
+      return Ok($"{keepId} was deleted");
     }
     catch (Exception e)
     {

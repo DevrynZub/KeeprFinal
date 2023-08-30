@@ -16,7 +16,7 @@ public class KeepsService
   {
     int keepId = _keepsRepository.CreateKeep(keepData);
 
-    Keep keep = GetKeepById(keepId);
+    Keep keep = GetKeepById(keepId, keepData.CreatorId);
 
     return keep;
   }
@@ -31,13 +31,21 @@ public class KeepsService
     return keep;
   }
 
+  internal Keep GetKeepByIdAndIncreaseViews(int keepId, string userId = null)
+  {
+    Keep keep = GetKeepById(keepId, userId);
+    keep.Views++;
+    _keepsRepository.UpdateKeep(keep);
+    return keep;
+  }
+
   internal List<Keep> GetKeeps()
   {
     List<Keep> keeps = _keepsRepository.GetKeeps();
     return keeps;
   }
 
-  internal string RemoveKeep(int keepId, string userId)
+  internal Keep RemoveKeep(int keepId, string userId)
   {
     Keep keep = GetKeepById(keepId);
     if (keep.CreatorId != userId)
@@ -45,7 +53,7 @@ public class KeepsService
       throw new Exception("Not your keep to remove");
     }
     _keepsRepository.RemoveKeep(keepId);
-    return "Keep removed";
+    return keep;
   }
 
   internal Keep UpdateKeep(Keep keepData, string userId)

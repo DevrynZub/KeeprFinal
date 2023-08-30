@@ -12,6 +12,13 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
   }
 
+  // async getKeepById(keepId) {
+  //   const res = await api.get(`api/keeps/${keepId}`)
+  //   logger.log('[Getting KEEPS BY Id]', res.data)
+  //   AppState.activeKeep.views++,
+  //     AppState.activeKeep = res.data
+  // }
+
   setActiveKeep(keep) {
     AppState.activeKeep = keep
     logger.log("This is my active keep", AppState.activeKeep)
@@ -35,6 +42,14 @@ class KeepsService {
     const res = await api.get(`api/vaults/${vaultId}/keeps`)
     logger.log('SHOW ME THE MAGIC CONSOLE of KEEPS?', res.data)
     AppState.keeps = res.data.map(k => new Keep(k))
+  }
+
+  async removeKeep(keepId) {
+    const res = await api.delete(`api/keeps/${keepId}`)
+    logger.log('You deleted a keep', res.data)
+    const keepIndex = AppState.keeps.findIndex(keep => keep.id == keepId)
+    AppState.keeps.splice(keepIndex, 1)
+    AppState.activeKeep = ''
   }
 
 

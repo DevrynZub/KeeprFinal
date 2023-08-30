@@ -60,6 +60,22 @@ WHERE v.id = @vaultId
     _db.Execute(sql, new { vaultId });
   }
 
+  internal List<Vault> GetMyVaults(string userId)
+  {
+    string sql = @"
+      SELECT
+      v.*,
+      a.*
+      FROM vaults v
+      JOIN accounts a ON v.creatorId = a.id
+      WHERE v.creatorId = @userId;";
+    return _db.Query<Vault, Profile, Vault>(sql, (v, profile) =>
+    {
+      v.Creator = profile;
+      return v;
+    }, new { userId }).ToList();
+  }
+
   internal List<Vault> GetProfileVaults(string profileId)
   {
     string sql = @"

@@ -24,6 +24,7 @@
 import { ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { vaultService } from '../services/VaultService.js';
+import { Modal } from 'bootstrap';
 
 export default {
   setup() {
@@ -37,6 +38,7 @@ export default {
         try {
           await vaultService.createVault(editable.value)
           editable.value = {};
+          Modal.getOrCreateInstance('#createVaultModal').hide()
         } catch (error) {
           return Pop.error(error.message)
 

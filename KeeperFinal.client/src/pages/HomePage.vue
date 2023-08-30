@@ -18,10 +18,11 @@ import { keepsService } from '../services/KeepsService.js'
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepCard from '../components/KeepCard.vue';
+import { useRoute } from 'vue-router';
 
 export default {
   setup() {
-
+    const route = useRoute()
 
     async function getKeeps() {
       try {
@@ -32,13 +33,17 @@ export default {
       }
     }
 
+
+
     onMounted(() => {
+      route.params.keepId
       getKeeps();
     });
     return {
       keeps: computed(() => AppState.keeps)
     };
   },
+
   components: { KeepCard }
 }
 </script>

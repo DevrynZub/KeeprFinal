@@ -5,10 +5,11 @@ import { api } from "./AxiosService.js"
 
 
 class VaultService {
-  // async getVaultsByAccount(accountId) {
-  //   const res = await api.get('account/vaults', accountId)
-  //   logger.log(res.data)
-  // }
+  async getVaultsByAccount(userId) {
+    logger.log('[GETTING MY VAULTS]', userId)
+    const res = await api.get('account/vaults', userId)
+    logger.log('[GETTING MY VAULTS]', res.data)
+  }
 
   async getVaultsByProfileId(profileId) {
     // logger.log('[AM I GETTING Vaults?]', profileId)

@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS accounts(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name varchar(255) COMMENT 'User Name',
   email varchar(255) COMMENT 'User Email',
-  picture varchar(255) COMMENT 'User Picture'
+  picture varchar(255) COMMENT 'User Picture',
+  coverImg varchar(255) COMMENT 'User CoverImg'
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE keeps(
@@ -27,7 +28,7 @@ CREATE TABLE vaults(
   name VARCHAR (255) NOT NULL,
   description VARCHAR (500) NOT NULL,
   img VARCHAR (500) NOt NULL,
-  isPrivate BOOLEAN DEFAULT False,
+  isPrivate BOOLEAN DEFAULT false,
   creatorId VARCHAR(255) NOT NUll,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )default charset utf8 COMMENT '';
@@ -49,6 +50,8 @@ VALUES('Naruto anime', 'This may be an obsession with Naruto anime', 'https://im
 
 INSERT INTO vaultKeeps(vaultId, creatorId, accountId)
 VALUES('1','64e8e541ad74581073a28ba9','64e8e541ad74581073a28ba9')
+
+DROP TABLE accounts
 
 DROP TABLE keeps
 

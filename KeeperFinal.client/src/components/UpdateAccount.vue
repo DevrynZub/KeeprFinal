@@ -14,6 +14,10 @@
         <label for="picture">Picture</label>
         <input class="form-control" type="url" id="picture" minlength="3" maxlength="200" v-model="editable.picture">
       </div>
+      <div class="mb-2">
+        <label for="coverImg">Cover Image</label>
+        <input class="form-control" type="url" id="coverImg" minlength="3" maxlength="300" v-model="editable.coverImg">
+      </div>
       <button type="submit">Update</button>
     </form>
   </div>

@@ -1,5 +1,6 @@
 <template>
-  <div @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails" class="keep-card">
+  <div v-if="keepProp" @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails"
+    class="keep-card">
     <div class="keep-image" :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
       <h3 class="keep-name elevation">{{ keepProp.name }}</h3>
       <router-link :to="{ name: 'Profile', params: { profileId: keepProp.creator.id } }">
@@ -10,10 +11,12 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
+import { AppState } from '../AppState.js';
 
 export default {
 
@@ -24,6 +27,11 @@ export default {
 
 
     return {
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account),
+
+
+
       setActiveKeep(keep) {
         try {
           keepsService.setActiveKeep(keep)
@@ -33,7 +41,10 @@ export default {
         }
       },
     }
-  }
+  },
+
+
+
 }
 </script>
 

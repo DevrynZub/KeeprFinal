@@ -17,7 +17,6 @@ public class KeepsRepository
       ;";
 
     int keepId = _db.ExecuteScalar<int>(sql, keepData);
-
     return keepId;
   }
 
@@ -29,7 +28,7 @@ public class KeepsRepository
       acc.*
       FROM keeps kee
       JOIN accounts acc ON acc.id = kee.creatorId
-      WHERE kee.id = @keepId LIMIT 1
+      WHERE kee.id = @keepId
       ;";
 
     Keep keep = _db.Query<Keep, Profile, Keep>(
@@ -41,9 +40,7 @@ public class KeepsRepository
       },
       new { keepId }
     ).FirstOrDefault();
-
     return keep;
-
   }
 
   internal List<Keep> GetKeeps()
@@ -54,16 +51,17 @@ public class KeepsRepository
   acc.*
   FROM keeps kee
   JOIN accounts acc ON acc.id = kee.creatorId
+  ORDER BY kee.name ASC
   ;";
 
     List<Keep> keeps = _db.Query<Keep, Profile, Keep>(
-  sql,
-  (keep, profile) =>
-  {
-    keep.Creator = profile;
-    return keep;
-  }
-  ).ToList();
+    sql,
+    (keep, profile) =>
+    {
+      keep.Creator = profile;
+      return keep;
+    }
+    ).ToList();
     return keeps;
   }
 
@@ -73,10 +71,9 @@ public class KeepsRepository
     UPDATE keeps
     SET
     name = @Name,
-    description = @Description
+    description = @Description,
+    views = @Views
     WHERE id = @Id
-    LIMIT 1; 
-     SELECT * FROM keeps WHERE id = @Id
     ;";
 
     _db.Execute(sql, originalKeep);

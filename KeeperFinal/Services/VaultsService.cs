@@ -18,11 +18,11 @@ public class VaultsService
     Vault vault = _vaultsRepository.GetVaultById(vaultId);
     if (vault == null)
     {
-      throw new Exception("This vault does not exist");
+      throw new Exception($"This vault does not exist: {vaultId}.");
     }
     if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
-      throw new Exception($"Bad vault id: {vaultId}. 😂");
+      throw new Exception($"Bad vault id: {vaultId}. Not Good 😂");
     }
     return vault;
   }
@@ -42,6 +42,12 @@ public class VaultsService
     _vaultsRepository.UpdateVault(originalVault);
 
     return originalVault;
+  }
+
+  internal List<Vault> GetMyVaults(string userId)
+  {
+    List<Vault> vaults = _vaultsRepository.GetMyVaults(userId);
+    return vaults;
   }
 
 
