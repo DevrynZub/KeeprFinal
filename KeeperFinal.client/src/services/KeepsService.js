@@ -30,6 +30,13 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
   }
 
+  async getKeepsByVaultId(vaultId) {
+    logger.log('SHOW ME THE MAGIC CONSOLE?')
+    const res = await api.get(`api/vaults/${vaultId}/keeps`)
+    logger.log('SHOW ME THE MAGIC CONSOLE of KEEPS?', res.data)
+    AppState.keeps = res.data.map(k => new Keep(k))
+  }
+
 
 }
 

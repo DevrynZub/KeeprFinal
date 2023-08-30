@@ -1,13 +1,27 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid text-center">
+    <div class="cover-img"></div>
     <div class="row">
       <div class="col-12">
-        <h1>{{ profile }}</h1>
+        <div class="profile-container">
+          <img class="profile-picture" :src="profile.picture" alt="">
+          <h1>{{ profile.name }}</h1>
+          <div class="profile-stats">
+            <div class="stats-item">
+              <p>{{ vaults.length }}</p>
+              <span>Vaults</span>
+            </div>
+            <div class="stats-item">
+              <p>{{ keeps.length }}</p>
+              <span>Keeps</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <h1>Vaults</h1>
-      <div class="col-md-4 col-12 mb-3" v-for="vault in vaults" :key="vault.id">
+      <div class="col-md-3 col-12 mb-3" v-for="vault in vaults" :key="vault.id">
         <VaultCard :vaultProp="vault" />
       </div>
     </div>
@@ -75,7 +89,7 @@ export default {
 
     return {
       account: computed(() => AppState.account),
-      profiles: computed(() => AppState.profiles),
+      profile: computed(() => AppState.profile),
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
     };
@@ -85,4 +99,44 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  /* Adjust as needed */
+}
+
+.profile-picture {
+  width: 150px;
+  /* Adjust size as needed */
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.stats-item p {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.stats-item span {
+  font-size: 14px;
+  color: #999;
+}
+</style>

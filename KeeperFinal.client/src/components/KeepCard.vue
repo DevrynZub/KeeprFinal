@@ -2,12 +2,12 @@
   <div @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails" class="keep-card">
     <div class="keep-image" :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
       <h3 class="keep-name elevation">{{ keepProp.name }}</h3>
-      <img :src="keepProp.creator.picture" class="keep-profile">
+      <router-link :to="{ name: 'Profile', params: { profileId: keepProp.creator.id } }">
+        <img :src="keepProp.creator.picture" class="keep-profile">
+      </router-link>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import { Keep } from '../models/Keep.js';
@@ -56,10 +56,8 @@ export default {
   left: 10px;
   color: white;
   padding: 5px 10px;
-  // font-size: 1.5rem;
   font-weight: bold;
   border-radius: 5px;
-  // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .keep-card:hover {
@@ -80,8 +78,8 @@ export default {
 }
 
 .keep-profile {
-  height: 10vh;
-  width: 10vh;
+  height: 7vh;
+  width: 7vh;
   justify-content: end;
   border-radius: 70%;
   position: absolute;
