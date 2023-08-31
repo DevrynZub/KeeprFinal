@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS accounts(
   name varchar(255) COMMENT 'User Name',
   email varchar(255) COMMENT 'User Email',
   picture varchar(255) COMMENT 'User Picture',
-  coverImg varchar(255) COMMENT 'User CoverImg'
+  coverImg varchar(500) COMMENT 'User Cover Image'
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE keeps(
@@ -27,8 +27,8 @@ CREATE TABLE vaults(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name VARCHAR (255) NOT NULL,
   description VARCHAR (500) NOT NULL,
-  img VARCHAR (500) NOt NULL,
-  isPrivate BOOLEAN DEFAULT false,
+  img VARCHAR (500) NOT NULL,
+  isPrivate BOOLEAN NOT NULL DEFAULT false,
   creatorId VARCHAR(255) NOT NUll,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )default charset utf8 COMMENT '';
@@ -41,8 +41,9 @@ CREATE TABLE vaultKeeps(
   keepId INT NOT NULL,
   vaultId INT NOT NULL,
   creatorId VARCHAR(255) NOT NULL,
-  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
-  FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
+  FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
+  FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
+  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
 
 INSERT INTO keeps(name, description, img, views, creatorId)

@@ -18,7 +18,7 @@ public class VaultsService
     Vault vault = _vaultsRepository.GetVaultById(vaultId);
     if (vault == null)
     {
-      throw new Exception($"This vault does not exist: {vaultId}.");
+      throw new Exception($"Bad Vault ID: {vaultId}.");
     }
     if (vault.IsPrivate == true && vault.CreatorId != userId)
     {

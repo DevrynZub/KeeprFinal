@@ -52,12 +52,11 @@
 
 
 <script>
-import { computed, ref, } from 'vue';
+import { computed, ref, watchEffect, } from 'vue';
 import { AppState } from '../AppState.js';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import Pop from '../utils/Pop.js';
-import { Modal } from 'bootstrap';
 
 
 
@@ -69,6 +68,25 @@ export default {
 
     const editable = ref({});
 
+    async function removeKeep() {
+      try {
+        const confirmRemove = await Pop.confirm('Delete This Keep?')
+        if (!confirmRemove) {
+          return
+        }
+        const keepId = AppState.activeKeep.id
+        await keepsService.removeKeep(keepId)
+      } catch (error) {
+        Pop.error(error.message)
+      }
+    }
+
+
+    watchEffect(() => {
+      removeKeep
+      AppState.activeKeep
+    })
+
     return {
       editable,
       keep: computed(() => AppState.activeKeep),
@@ -77,18 +95,7 @@ export default {
     }
   },
 
-  async removeKeep() {
-    try {
-      const confirmRemove = await Pop.confirm('Delete This Keep?')
-      if (!confirmRemove) {
-        return
-      }
-      const keepId = AppState.activeKeep.id
-      await keepsService.removeRecipe(keepId)
-    } catch (error) {
-      Pop.error(error.message, '[]')
-    }
-  }
+
 }
 
 

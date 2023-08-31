@@ -6,6 +6,7 @@
       <router-link :to="{ name: 'Profile', params: { profileId: keepProp.creator.id } }">
         <img :src="keepProp.creator.picture" class="keep-profile">
       </router-link>
+
     </div>
   </div>
 </template>
