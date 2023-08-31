@@ -44,14 +44,13 @@ public class ProfilesController : ControllerBase
       return BadRequest(e.Message);
     }
   }
-
   [HttpGet("{profileId}/vaults")]
   public async Task<ActionResult<Vault>> GetProfileVaults(string profileId)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      List<Vault> vaults = _profilesService.GetProfileVaults(profileId);
+      List<Vault> vaults = _profilesService.GetProfileVaults(profileId, userInfo?.Id);
       return Ok(vaults);
     }
     catch (Exception e)

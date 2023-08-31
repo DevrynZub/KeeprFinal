@@ -1,13 +1,19 @@
 <template>
   <div class="container-fluid" v-if="activeVault">
     <div class="row mt-2">
-      <div class="col-md-6">
-        <div class="image-container">
-          <img class="img-fluid" :src="activeVault.coverImg" :alt="activeVault.name">
+      <div class="col-12">
+        <div class="image-container text-center">
           <img class="img-fluid" :src="activeVault.img" :alt="activeVault.name">
           <h1 class="vault-name">{{ activeVault.name }}</h1>
-          <p class="creator-name">{{ activeVault.creator.name }}</p>
+          <!-- <p class="creator-name">{{ activeVault.creator.name }}</p> -->
+          <p>Keeps: {{ keeps.length }}</p>
         </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <h1>Keeps</h1>
+      <div class="col-md-4 col-12 mb-3" v-for="keep in keeps" :key="keep.id">
+        <KeepCard :keepProp="keep" />
       </div>
     </div>
   </div>
@@ -19,49 +25,52 @@ import { vaultService } from '../services/VaultService.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import { useRoute, useRouter } from 'vue-router';
-import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
+import KeepCard from '../components/KeepCard.vue';
 
 
 export default {
   setup() {
     const route = useRoute();
-    const router = useRouter()
+    const router = useRouter();
+
+
 
     async function getVaultById() {
       try {
-        let vaultId = route.params.vaultId
+        let vaultId = route.params.vaultId;
         await vaultService.getVaultById(vaultId);
-      } catch (error) {
+      }
+      catch (error) {
         Pop.error(error.message);
-        logger.log(error)
+        logger.log(error);
         if (error.response.data.includes('😂')) {
-          router.push({ name: "Home" })
+          router.push({ name: "Home" });
         }
       }
     }
-
     async function getKeepsByVaultId() {
       try {
-        let vaultId = route.params.vaultId
-        await keepsService.getKeepsByVaultId(vaultId);
-      } catch (error) {
-        logger.error(error)
+        let vaultId = route.params.vaultId;
+        await vaultService.getKeepsByVaultId(vaultId);
+      }
+      catch (error) {
+        logger.error(error);
       }
     }
-
     watchEffect(() => {
       route.params.vaultId;
       getVaultById();
       getKeepsByVaultId();
     });
-
     return {
+      account: computed(() => AppState.account),
       activeVault: computed(() => AppState.activeVault),
       keeps: computed(() => AppState.keeps)
 
     };
   },
+  components: { KeepCard }
 };
 </script>
 

@@ -13,7 +13,7 @@ public class VaultsService
     return vault;
   }
 
-  internal Vault GetVaultById(int vaultId, string userId = null)
+  internal Vault GetVaultById(int vaultId, string userId)
   {
     Vault vault = _vaultsRepository.GetVaultById(vaultId);
     if (vault == null)
@@ -23,6 +23,16 @@ public class VaultsService
     if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
       throw new Exception($"Bad vault id: {vaultId}. Not Good 😂");
+    }
+    return vault;
+  }
+
+  internal Vault GetVaultById(int vaultId)
+  {
+    Vault vault = _vaultsRepository.GetVaultById(vaultId);
+    if (vault == null)
+    {
+      throw new Exception($"Bad Vault ID: {vaultId}.");
     }
     return vault;
   }

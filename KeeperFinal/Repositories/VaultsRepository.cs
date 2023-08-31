@@ -94,4 +94,23 @@ WHERE v.id = @vaultId
         return vault;
       }, new { profileId }).ToList();
   }
+  internal List<Vault> GetProfilePublicVaults(string profileId)
+  {
+    string sql = @"
+      SELECT
+      v.*,
+      acc.*
+      FROM vaults v
+      JOIN accounts acc ON v.creatorId = acc.id
+      WHERE v.creatorId = @profileId AND v.isPrivate = false
+      ;";
+    return _db.Query<Vault, Profile, Vault>(
+      sql,
+      (vault, profile) =>
+      {
+        vault.Creator = profile;
+        return vault;
+      }, new { profileId }).ToList();
+  }
+
 }

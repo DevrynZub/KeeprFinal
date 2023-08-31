@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid text-center">
+  <div class="container-fluid text-center" v-if="vaults">
     <div class="cover-img"></div>
     <div class="row">
       <div class="col-12">
@@ -36,7 +36,7 @@
 
 
 <script>
-import { computed, watchEffect } from 'vue';
+import { computed, popScopeId, watchEffect } from 'vue';
 import { AppState } from '../AppState.js';
 import { profileService } from '../services/ProfileService.js';
 import { useRoute } from 'vue-router';
@@ -45,6 +45,7 @@ import Pop from '../utils/Pop.js';
 import VaultCard from '../components/VaultCard.vue';
 import { keepsService } from '../services/KeepsService.js';
 import KeepCard from '../components/KeepCard.vue';
+import { logger } from '../utils/Logger.js';
 
 export default {
   setup() {
@@ -93,6 +94,17 @@ export default {
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps),
     };
+  },
+
+  async getKeepById(keepId) {
+    try {
+      logger.log('[DO I GET KEEPS]', keepId)
+      const res = await keepsService.getKeepById(keepId);
+      AppState.activeKeep = res.data;
+      AppState.activeKeep.views++;
+    } catch (error) {
+      Pop.error(error.message);
+    }
   },
   components: { VaultCard, KeepCard }
 }

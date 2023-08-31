@@ -1,9 +1,11 @@
 <template>
   <router-link :to="{ name: 'ActiveVaultPage', params: { vaultId: vaultProp.id } }" class="vault-card">
     <div class="vault-image" :style="{ backgroundImage: 'url(' + vaultProp.img + ')' }">
-      <h3 class="vault-name elevation">{{ vaultProp.name }}</h3>
+      <h3 class="vault-name elevation img-fluid">{{ vaultProp.name }}</h3>
+      <!-- <h4 class="text-black">{{ vaultProp.description }}</h4> -->
     </div>
   </router-link>
+  <p class="mdi mdi-lock">{{ vaultProp.isPrivate == true }}</p>
 </template>
 
 
@@ -14,12 +16,17 @@
 <script>
 import { Vault } from '../models/Vault.js';
 
+
 export default {
 
   props: {
     vaultProp: { type: Vault, require: true }
   },
   setup() {
+
+
+
+
     return {}
   }
 }
@@ -50,5 +57,15 @@ export default {
 .vault-card:hover {
   transform: translateY(-3px);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vault-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 5px;
 }
 </style>

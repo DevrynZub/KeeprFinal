@@ -28,6 +28,7 @@ public class KeepsService
     {
       throw new Exception($"Bad Keep Id: {keepId}");
     }
+    keep.Views++;
     return keep;
   }
 

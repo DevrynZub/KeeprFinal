@@ -12,12 +12,11 @@ class KeepsService {
     AppState.keeps = res.data.map(k => new Keep(k))
   }
 
-  // async getKeepById(keepId) {
-  //   const res = await api.get(`api/keeps/${keepId}`)
-  //   logger.log('[Getting KEEPS BY Id]', res.data)
-  //   AppState.activeKeep.views++,
-  //     AppState.activeKeep = res.data
-  // }
+  async getKeepById(keepId) {
+    const res = await api.get(`api/keeps/${keepId}`)
+    logger.log('[Getting KEEPS BY Id]', res.data)
+    AppState.keeps = new Keep(res.data)
+  }
 
   setActiveKeep(keep) {
     AppState.activeKeep = keep
@@ -33,14 +32,7 @@ class KeepsService {
 
   async getKeepsByProfileId(profileId) {
     const res = await api.get(`api/profiles/${profileId}/keeps`)
-    logger.log('[AM I GETTING KEEPS?]', res.data)
-    AppState.keeps = res.data.map(k => new Keep(k))
-  }
-
-  async getKeepsByVaultId(vaultId) {
-    logger.log('SHOW ME THE MAGIC CONSOLE?')
-    const res = await api.get(`api/vaults/${vaultId}/keeps`)
-    logger.log('SHOW ME THE MAGIC CONSOLE of KEEPS?', res.data)
+    // logger.log('[AM I GETTING KEEPS?]', res.data)
     AppState.keeps = res.data.map(k => new Keep(k))
   }
 

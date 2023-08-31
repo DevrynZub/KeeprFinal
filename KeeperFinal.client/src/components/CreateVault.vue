@@ -15,7 +15,11 @@
         style="height:200px"></textarea>
       <label for="description">Description</label>
     </div>
-    <button class="btn back-button" data-bs-target="#createVault" data-bs-toggle="modal">Create Vault</button>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" role="switch" id="vaultIsPrivate" v-model="editable.isPrivate">
+      <label class="form-check-label" for="vaultIsPrivate">Make Vault Private?</label>
+    </div>
+    <button class="btn btn-success" data-bs-target="#createVault" data-bs-toggle="modal">Create Vault</button>
   </form>
 </template>
 
@@ -36,6 +40,9 @@ export default {
 
       async createVault() {
         try {
+          if (!editable.value.isPrivate) {
+            editable.value.isPrivate = false;
+          }
           await vaultService.createVault(editable.value)
           editable.value = {};
           Modal.getOrCreateInstance('#createVaultModal').hide()

@@ -18,6 +18,12 @@ class VaultService {
     AppState.vaults = res.data.map(v => new Vault(v))
   }
 
+  async getKeepsByVaultId(vaultId) {
+    const res = await api.get(`api/vaults/${vaultId}/keeps`)
+    logger.log('SHOW ME THE MAGIC CONSOLE of KEEPS?', res.data)
+    // AppState.vaultHasKeeps = res.data.map(vhk => new vaultHasKeeps(vhk))
+  }
+
   async getVaultById(vaultId) {
     const res = await api.get(`api/vaults/${vaultId}`)
     logger.log('GOT VAULT', res.data)
@@ -31,6 +37,13 @@ class VaultService {
     logger.log('[CREATED VAULT]', res.data)
     const newVault = new Vault(res.data)
     AppState.vaults.push(newVault)
+  }
+
+  async removeVault(vaultId) {
+    const res = await api.delete(`api/vaults/${vaultId}`)
+    logger.log('You deleted a Vault', res.data)
+    const vaultIndex = AppState.vaults.findIndex(vault => vault.id == vaultId)
+    AppState.vaults.splice(vaultIndex, 1)
   }
 
 }

@@ -26,8 +26,10 @@
                   Vaults
                 </button>
                 <ul class="dropdown-menu">
-                  <li><button class="dropdown-item" type="button">Action</button></li>
-                  <li><button class="dropdown-item" type="button">Another action</button></li>
+                  <li><button class="dropdown-item" type="button" @click="addKeepToVault(vaults[1].id)">{{ vaults[1]?.name
+                  }}</button></li>
+                  <li><button class="dropdown-item" type="button" @click="addKeepToVault(vaults[2].id)">{{ vaults[2]?.name
+                  }}</button></li>
                 </ul>
               </div>
               <router-link :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
@@ -36,15 +38,6 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
-          <div class="col-4 position-relative">
-            <div v-if="keep.creator?.id == account.id">
-              <i @click=" removeKeep()" class="mdi mdi-delete add-button me-2" title="DELETE"></i>
-            </div>
-          </div>
-        </div>
-        <div>
-        </div>
       </div>
     </div>
   </div>
@@ -52,11 +45,12 @@
 
 
 <script>
-import { computed, ref, watchEffect, } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { Keep } from '../models/Keep.js';
-import { keepsService } from '../services/KeepsService.js';
-import Pop from '../utils/Pop.js';
+import { logger } from '../utils/Logger.js';
+import { vaultService } from '../services/VaultService.js';
+
 
 
 
@@ -66,36 +60,25 @@ export default {
   },
   setup() {
 
-    const editable = ref({});
-
-    async function removeKeep() {
+    async function getVaultsByAccount() {
       try {
-        const confirmRemove = await Pop.confirm('Delete This Keep?')
-        if (!confirmRemove) {
-          return
-        }
-        const keepId = AppState.activeKeep.id
-        await keepsService.removeKeep(keepId)
+        await vaultService.getVaultsByAccount()
       } catch (error) {
-        Pop.error(error.message)
+        logger.error(error)
       }
     }
 
-
-    watchEffect(() => {
-      removeKeep
-      AppState.activeKeep
+    onMounted(() => {
+      getVaultsByAccount();
     })
 
+
     return {
-      editable,
       keep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
       vaults: computed(() => AppState.vaults),
     }
   },
-
-
 }
 
 

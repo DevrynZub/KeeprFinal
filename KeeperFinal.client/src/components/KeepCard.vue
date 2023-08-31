@@ -6,6 +6,9 @@
       <router-link :to="{ name: 'Profile', params: { profileId: keepProp.creator.id } }">
         <img :src="keepProp.creator.picture" class="keep-profile">
       </router-link>
+      <div v-if="keepProp.creator.id === account.id">
+        <i @click.stop="removeKeep(keepProp)" class="mdi mdi-delete-circle add-button me-2" title="DELETE"></i>
+      </div>
 
     </div>
   </div>
@@ -27,11 +30,10 @@ export default {
   setup() {
 
 
+
     return {
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
-
-
 
       setActiveKeep(keep) {
         try {
@@ -41,6 +43,17 @@ export default {
           logger.log(error)
         }
       },
+
+      async removeKeep(keep) {
+        try {
+          const confirmDelete = await Pop.confirm('Delete This Keep?');
+          if (confirmDelete) {
+            await keepsService.removeKeep(keep.id);
+          }
+        } catch (error) {
+          Pop.error(error.message);
+        }
+      }
     }
   },
 
@@ -60,6 +73,14 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(134, 52, 52, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-button {
+  position: absolute;
+  right: -15px;
+  bottom: 95%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .keep-name {

@@ -29,9 +29,17 @@ public class ProfilesService
     return keeps;
   }
 
-  internal List<Vault> GetProfileVaults(string profileId)
+  internal List<Vault> GetProfileVaults(string profileId, string userId)
   {
-    List<Vault> vaults = _vaultsRepository.GetProfileVaults(profileId);
+    List<Vault> vaults = null;
+    if (userId == null)
+    {
+      vaults = _vaultsRepository.GetProfilePublicVaults(profileId);
+    }
+    else
+    {
+      vaults = _vaultsRepository.GetProfileVaults(profileId);
+    }
     return vaults;
   }
 }
