@@ -91,11 +91,6 @@ public class VaultsController : ControllerBase
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      Vault vault = _vaultsService.GetVaultById(vaultId);
-      if (vault.CreatorId != userInfo.Id)
-      {
-        throw new Exception("This isn't your vault buddy!");
-      }
       List<KeepCollaboration> keepCollaborations = _vaultKeepsService.GetKeepsByVaultId(vaultId);
       return Ok(keepCollaborations);
     }

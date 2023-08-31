@@ -31,30 +31,17 @@
 <script>
 import { computed, ref, watchEffect } from 'vue';
 import { AppState } from '../AppState';
-import Pop from '../utils/Pop.js';
-import { vaultService } from '../services/VaultService.js';
 import VaultCard from '../components/VaultCard.vue';
 
 
 
 export default {
   setup() {
-    const user = ref({});
     const editable = ref({});
 
-    async function getVaultsByAccount() {
-      try {
-        let userId = user.value.id;
-        await vaultService.getVaultsByAccount(userId);
-      }
-      catch (error) {
-        Pop.error(error);
-      }
-    }
 
 
     watchEffect(() => {
-      getVaultsByAccount();
     });
     return {
       editable,

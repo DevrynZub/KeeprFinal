@@ -20,22 +20,18 @@
 
           <div class="row">
             <div class="col-12 mt-5">
-              <div class="dropdown">
-                <button class="btn btn-secondary-outline dropdown-toggle fs-3 mb-4" type="button"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  Vaults
-                </button>
-                <ul class="dropdown-menu">
-                  <li><button class="dropdown-item" type="button" @click="addKeepToVault(vaults[1].id)">{{ vaults[1]?.name
-                  }}</button></li>
-                  <li><button class="dropdown-item" type="button" @click="addKeepToVault(vaults[2].id)">{{ vaults[2]?.name
-                  }}</button></li>
-                </ul>
-              </div>
-              <router-link :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
-                <img :src="keep.creator.picture" class="keep-profile">
-              </router-link>
+              <form action="">
+                <select @click="addToVault()" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </form>
             </div>
+            <router-link :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
+              <img :src="keep.creator.picture" class="keep-profile">
+            </router-link>
           </div>
         </div>
       </div>

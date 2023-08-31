@@ -28,15 +28,17 @@ public class KeepsService
     {
       throw new Exception($"Bad Keep Id: {keepId}");
     }
-    keep.Views++;
     return keep;
   }
 
   internal Keep GetKeepByIdAndIncreaseViews(int keepId, string userId = null)
   {
     Keep keep = GetKeepById(keepId, userId);
+
     keep.Views++;
+
     _keepsRepository.UpdateKeep(keep);
+
     return keep;
   }
 

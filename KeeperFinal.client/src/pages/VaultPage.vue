@@ -5,7 +5,9 @@
         <div class="image-container text-center">
           <img class="img-fluid" :src="activeVault.img" :alt="activeVault.name">
           <h1 class="vault-name">{{ activeVault.name }}</h1>
-          <!-- <p class="creator-name">{{ activeVault.creator.name }}</p> -->
+          <div v-if="activeVault.creator.id === account.id">
+            <i @click.stop="removeVault(activeVault)" class="mdi mdi-delete-circle add-button me-2" title="DELETE"></i>
+          </div>
           <p>Keeps: {{ keeps.length }}</p>
         </div>
       </div>
@@ -20,7 +22,7 @@
 </template>
 
 <script>
-import { computed, watchEffect } from 'vue';
+import { computed, onMounted, watchEffect } from 'vue';
 import { vaultService } from '../services/VaultService.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
@@ -58,7 +60,7 @@ export default {
         logger.error(error);
       }
     }
-    watchEffect(() => {
+    onMounted(() => {
       route.params.vaultId;
       getVaultById();
       getKeepsByVaultId();
@@ -66,7 +68,22 @@ export default {
     return {
       account: computed(() => AppState.account),
       activeVault: computed(() => AppState.activeVault),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+
+      async removeVault(vault) {
+        try {
+          const confirmDelete = await Pop.confirm('Delete This Vault?');
+          if (confirmDelete) {
+            await vaultService.removeVault(vault.id);
+          }
+        } catch (error) {
+          Pop.error(error.message);
+          logger.log(error);
+          if (error.response.data.includes('😂')) {
+            router.push({ name: "Home" });
+          }
+        }
+      }
 
     };
   },

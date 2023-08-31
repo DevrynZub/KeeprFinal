@@ -11,8 +11,8 @@ public class KeepsRepository
   internal int CreateKeep(Keep keepData)
   {
     string sql = @"
-      INSERT INTO keeps (name, description, img, views, creatorId)
-      VALUES(@Name, @Description, @Img, @Views, @CreatorId);
+      INSERT INTO keeps (name, description, img, creatorId)
+      VALUES(@Name, @Description, @Img, @CreatorId);
       SELECT LAST_INSERT_ID()  
       ;";
 

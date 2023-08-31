@@ -9,27 +9,44 @@
       <div v-if="keepProp.creator.id === account.id">
         <i @click.stop="removeKeep(keepProp)" class="mdi mdi-delete-circle add-button me-2" title="DELETE"></i>
       </div>
+      <div>
+        <i @click="getKeepById()"></i>
+      </div>
 
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, popScopeId, watchEffect } from 'vue';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
+import { useRoute } from 'vue-router';
 
 export default {
-
   props: {
     keepProp: { type: Keep, require: true }
   },
   setup() {
 
+    const route = useRoute()
 
+    // async function getKeepById() {
+    //   try {
+    //     let keepId = route.params.keepId
+    //     await keepsService.getKeepById(keepId)
+    //   } catch (error) {
+    //     Pop.error(error.message)
+    //   }
+    // }
+
+    onMounted(() => {
+      route.params.keepId
+      // getKeepById
+    })
 
     return {
       keeps: computed(() => AppState.keeps),

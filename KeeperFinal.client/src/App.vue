@@ -27,10 +27,12 @@ import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import UpdateAccount from './components/UpdateAccount.vue'
 
+
 export default {
   setup() {
+
     return {
-      appState: computed(() => AppState)
+      appState: computed(() => AppState),
     }
   },
   components: { Navbar, UpdateAccount }
