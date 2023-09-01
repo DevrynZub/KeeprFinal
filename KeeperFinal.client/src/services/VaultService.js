@@ -1,7 +1,6 @@
 import { AppState } from "../AppState.js"
 import { Keep } from "../models/Keep.js"
 import { Vault } from "../models/Vault.js"
-import { VaultKeep } from "../models/VaultKeep.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 

@@ -47,7 +47,7 @@ CREATE TABLE vaultKeeps(
 )default charset utf8 COMMENT '';
 
 INSERT INTO keeps(name, description, img, creatorId)
-VALUES('Naruto anime', 'This may be an obsession with Naruto anime', 'https://images.unsplash.com/photo-1630710478039-9c680b99f800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80', '64e8e541ad74581073a28ba9' )
+VALUES('Naruto anime', 'This may be an obsession with Naruto anime', 'https://images.unsplash.com/photo-1630710478039-9c680b99f800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80','64e8e541ad74581073a28ba9' )
 
 INSERT INTO vaultKeeps(vaultId, keepId, creatorId, accountId)
 VALUES('1','4','64e8e541ad74581073a28ba9','64e8e541ad74581073a28ba9')

@@ -5,11 +5,14 @@ public class KeepsService
   private readonly KeepsRepository _keepsRepository;
   private readonly VaultsService _vaultsService;
 
+  private readonly VaultKeepsRepository _vaultKeepsRepository;
 
-  public KeepsService(KeepsRepository keepsRepository, VaultsService vaultsService)
+
+  public KeepsService(KeepsRepository keepsRepository, VaultsService vaultsService, VaultKeepsRepository vaultKeepsRepository)
   {
     _keepsRepository = keepsRepository;
     _vaultsService = vaultsService;
+    _vaultKeepsRepository = vaultKeepsRepository;
   }
 
   internal Keep CreateKeep(Keep keepData)
@@ -41,6 +44,20 @@ public class KeepsService
 
     return keep;
   }
+  internal Keep GetKeepByIdAndIncreaseKept(int keepId, string userId = null)
+  {
+    Keep keep = GetKeepById(keepId, userId);
+
+    keep.Kept++;
+
+    _keepsRepository.UpdateKeep(keep);
+
+    return keep;
+  }
+
+
+
+
 
   internal List<Keep> GetKeeps()
   {
