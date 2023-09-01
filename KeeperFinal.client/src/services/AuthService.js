@@ -29,7 +29,6 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   socketService.authenticate(AuthService.bearer)
   await vaultService.GetAccountVaults()
   // NOTE if there is something you want to do once the user is authenticated, place that here
-  // FIXME get account vaults here
 })
 
 async function refreshAuthToken(config) {

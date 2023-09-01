@@ -24,10 +24,12 @@
 import { ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { keepsService } from '../services/KeepsService.js';
+import { useRoute } from 'vue-router';
 
 export default {
   setup() {
     const editable = ref({})
+    const route = useRoute({})
 
 
     return {
@@ -36,7 +38,8 @@ export default {
       async createKeep() {
         try {
           // FIXME grab the route.params.profileId and pass to the service
-          await keepsService.createKeep(editable.value)
+          const profileId = route.params.profileId;
+          await keepsService.createKeep(editable.value, profileId)
           editable.value = {};
         } catch (error) {
           return Pop.error(error.message)

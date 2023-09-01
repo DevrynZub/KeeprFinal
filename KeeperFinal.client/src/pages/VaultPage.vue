@@ -80,7 +80,6 @@ export default {
             await vaultService.removeVault(vault.id);
             router.push({ name: 'Home' });
           }
-          // FIXME add router push
         } catch (error) {
           Pop.error(error.message);
           logger.log(error);

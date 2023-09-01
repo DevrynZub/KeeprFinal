@@ -28,10 +28,12 @@
 import { ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { vaultService } from '../services/VaultService.js';
+import { useRoute } from 'vue-router';
 
 export default {
   setup() {
     const editable = ref({})
+    const route = useRoute();
 
 
     return {
@@ -43,7 +45,8 @@ export default {
           if (!editable.value.isPrivate) {
             editable.value.isPrivate = false;
           }
-          await vaultService.createVault(editable.value)
+          const profileId = route.params.profileId;
+          await vaultService.createVault(editable.value, profileId)
           editable.value = {};
         } catch (error) {
           return Pop.error(error.message)

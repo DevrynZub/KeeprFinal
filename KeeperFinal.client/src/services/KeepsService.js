@@ -19,12 +19,10 @@ class KeepsService {
     logger.log("This is my active keep", AppState.activeKeep)
   }
 
-  // FIXME pass profileId as param here
   async createKeep(keepData, profileId) {
     const res = await api.post('api/keeps', keepData);
     logger.log('[CREATED KEEP]', res.data);
     const newKeep = new Keep(res.data);
-    // FIXME check to see if the profileId matches the person logged in, if it does push it, if not don't
     if (profileId === AppState.account.id) {
       AppState.keeps.push(newKeep);
     }

@@ -46,7 +46,6 @@ export default {
     return {
       editable,
       account: computed(() => AppState.account),
-      // FIXME change computed to myVaults
       vaults: computed(() => AppState.myVaults),
     };
   },

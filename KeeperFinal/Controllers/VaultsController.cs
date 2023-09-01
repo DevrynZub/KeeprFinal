@@ -90,7 +90,6 @@ public class VaultsController : ControllerBase
   {
     try
     {
-      // FIXME throw error in the service if userInfo is null
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       List<KeepCollaboration> keepCollaborations = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo);
       return Ok(keepCollaborations);
