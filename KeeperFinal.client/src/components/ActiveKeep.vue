@@ -20,18 +20,25 @@
 
           <div class="row">
             <div class="col-12 mt-5">
-              <form action="">
-                <select @click="addToVault()" class="form-select" aria-label="Default select example">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-              </form>
+              <div class="dropdown">
+                <div class="dropdown">
+                  <button class="btn btn-secondary-outline dropdown-toggle fs-3 mb-4" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Vaults
+                  </button>
+                  <ul class="dropdown-menu">
+                    <!-- FIXME v-for over myVaults to draw li  -->
+                    <!-- FIXME how can I pass the vault id here? -->
+                    <li v-for="vault in myVaults" :key="vault.id">
+                      <a class="dropdown-item" href="#" @click="addKeepToVault(vault.id)">{{ vault.name }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <router-link :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
+                <img :src="keep.creator.picture" class="keep-profile">
+              </router-link>
             </div>
-            <router-link :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
-              <img :src="keep.creator.picture" class="keep-profile">
-            </router-link>
           </div>
         </div>
       </div>
@@ -44,8 +51,9 @@
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { Keep } from '../models/Keep.js';
-import { logger } from '../utils/Logger.js';
-import { vaultService } from '../services/VaultService.js';
+
+import { keepsService } from '../services/KeepsService.js';
+import Pop from '../utils/Pop.js';
 
 
 
@@ -56,23 +64,27 @@ export default {
   },
   setup() {
 
-    async function getVaultsByAccount() {
-      try {
-        await vaultService.getVaultsByAccount()
-      } catch (error) {
-        logger.error(error)
-      }
-    }
-
-    onMounted(() => {
-      getVaultsByAccount();
-    })
-
 
     return {
       keep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
+      myVaults: computed(() => AppState.myVaults),
+
+      async addKeepToVault() {
+        try {
+          await keepsService.addKeepToVault()
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      }
+
+
+
+
+
+
+
+
     }
   },
 }

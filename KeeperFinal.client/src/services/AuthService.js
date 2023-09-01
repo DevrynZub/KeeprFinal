@@ -5,6 +5,7 @@ import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
+import { vaultService } from './VaultService.js'
 
 export const AuthService = initialize({
   domain,
@@ -20,13 +21,15 @@ export const AuthService = initialize({
   }
 })
 
-AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
+AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   api.defaults.headers.authorization = AuthService.bearer
   api.interceptors.request.use(refreshAuthToken)
   AppState.user = AuthService.user
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
+  await vaultService.GetAccountVaults()
   // NOTE if there is something you want to do once the user is authenticated, place that here
+  // FIXME get account vaults here
 })
 
 async function refreshAuthToken(config) {

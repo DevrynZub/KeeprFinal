@@ -26,6 +26,7 @@ import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import UpdateAccount from './components/UpdateAccount.vue'
+import ActiveKeep from './components/ActiveKeep.vue'
 
 
 export default {
@@ -35,7 +36,7 @@ export default {
       appState: computed(() => AppState),
     }
   },
-  components: { Navbar, UpdateAccount }
+  components: { Navbar, UpdateAccount, ActiveKeep }
 }
 </script>
 <style lang="scss">

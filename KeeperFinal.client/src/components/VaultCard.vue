@@ -6,7 +6,7 @@
         <!-- <h4 class="text-black">{{ vaultProp.description }}</h4> -->
       </div>
     </router-link>
-    <p class="mdi mdi-lock">{{ vaultProp.isPrivate == true }}</p>
+    <p class="mdi mdi-lock">{{ vaultProp.isPrivate === true }}</p>
   </div>
 </template>
 

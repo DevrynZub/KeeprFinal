@@ -1,6 +1,7 @@
 import { AppState } from "../AppState.js"
 import { Keep } from "../models/Keep.js"
 import { Vault } from "../models/Vault.js"
+import { VaultKeep } from "../models/VaultKeep.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -36,14 +37,23 @@ class VaultService {
 
   async removeVault(vaultId) {
     const res = await api.delete(`api/vaults/${vaultId}`)
-    logger.log('[You deleted a Vault ${vaultId}]', res.data)
+    logger.log('[You deleted a Vault]', res.data)
     const vaultIndex = AppState.vaults.findIndex(vault => vault.id == vaultId)
     AppState.vaults.splice(vaultIndex, 1)
   }
 
-  async GetVaultsByAccount(accountId) {
-    const res = await api.get('accounts/vaults', accountId)
+  async GetAccountVaults() {
+    logger.log('Getting my account vaults')
+    const res = await api.get('/account/vaults')
     logger.log('Getting my account vaults', res.data)
+    AppState.myVaults = res.data.map(v => new Vault(v))
+  }
+
+  async removeVaultKeep(vaultKeepId) {
+    const res = await api.delete(`api/vaultkeeps/${vaultKeepId}`)
+    logger.log('[You removed a keep from this vault]', res.data)
+    const keepRemoved = AppState.vaultKeeps.findIndex(k => k.vaultKeepId == vaultKeepId)
+    AppState.vaultKeeps.splice(keepRemoved, 1)
   }
 
 }

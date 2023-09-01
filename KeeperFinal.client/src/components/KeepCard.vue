@@ -1,30 +1,25 @@
 <template>
-  <div v-if="keepProp" @click="setActiveKeep(keepProp)" data-bs-toggle="modal" data-bs-target="#keepDetails"
-    class="keep-card">
-    <div class="keep-image" :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
+  <div v-if="keepProp" @click.stop="setActiveKeep(keepProp)" class="keep-card">
+    <div data-bs-toggle="modal" data-bs-target="#keepDetails" class="keep-image"
+      :style="{ backgroundImage: 'url(' + keepProp.img + ')' }">
       <h3 class="keep-name elevation">{{ keepProp.name }}</h3>
       <router-link :to="{ name: 'Profile', params: { profileId: keepProp.creator.id } }">
         <img :src="keepProp.creator.picture" class="keep-profile">
       </router-link>
       <div v-if="keepProp.creator.id === account.id">
-        <i @click.stop="removeKeep(keepProp)" class="mdi mdi-delete-circle add-button me-2" title="DELETE"></i>
+        <i @click="removeKeep(keepProp)" class="mdi mdi-delete-circle add-button me-2" title="DELETE"></i>
       </div>
-      <div>
-        <i @click="getKeepById()"></i>
-      </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import { computed, onMounted, popScopeId, watchEffect } from 'vue';
+import { computed } from 'vue';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
-import { useRoute } from 'vue-router';
 
 export default {
   props: {
@@ -32,21 +27,6 @@ export default {
   },
   setup() {
 
-    const route = useRoute()
-
-    // async function getKeepById() {
-    //   try {
-    //     let keepId = route.params.keepId
-    //     await keepsService.getKeepById(keepId)
-    //   } catch (error) {
-    //     Pop.error(error.message)
-    //   }
-    // }
-
-    onMounted(() => {
-      route.params.keepId
-      // getKeepById
-    })
 
     return {
       keeps: computed(() => AppState.keeps),

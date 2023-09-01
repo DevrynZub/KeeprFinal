@@ -7,7 +7,6 @@
     <div class="row p-2">
       <div class="col-md-4 col-12 mb-3" v-for="keep in keeps" :key="keep.id">
         <KeepCard :keepProp="keep" />
-        <i @click="getKeepById()"></i>
       </div>
     </div>
   </div>
@@ -35,21 +34,9 @@ export default {
       }
     }
 
-    async function getKeepById() {
-      try {
-        let keepId = route.params.keepId
-        await keepsService.getKeepById(keepId)
-      } catch (error) {
-        Pop.error(error.message)
-      }
-    }
-
-
-
     onMounted(() => {
       route.params.keepId
       getKeeps();
-      getKeepById
     });
     return {
       keeps: computed(() => AppState.keeps)

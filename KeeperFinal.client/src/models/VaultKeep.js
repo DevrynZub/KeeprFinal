@@ -1,12 +1,9 @@
+import { Account } from "./Account.js";
 
 
-export class VaultKeep {
+export class VaultKeep extends Account {
   constructor(data) {
-    this.id = data.id
-    this.keepId = data.keepId
-    this.vaultId = data.vaultId
-    this.creator = data.creator
-    this.accountId = data.accountId
-    this.creatorId = data.creatorId
+    super(data)
+    this.vaultKeepId = data.vaultKeepId
   }
 }

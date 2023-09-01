@@ -35,6 +35,7 @@ export default {
 
       async createKeep() {
         try {
+          // FIXME grab the route.params.profileId and pass to the service
           await keepsService.createKeep(editable.value)
           editable.value = {};
         } catch (error) {

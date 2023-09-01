@@ -38,8 +38,14 @@ public class VaultKeepsService
   }
 
   internal List<KeepCollaboration> GetKeepsByVaultId(int vaultId)
+
   {
+    // FIXME get the vault that we are trying to view the keeps for
+    // FIXME check if the user has access to the OG vault....am i the person who made and is it private
     List<KeepCollaboration> keepCollaborations = _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
+
+    // vaults = vaults.FindAll(vault => vault.isPrivate == false || vault.CreatorId == userId);
+
     return keepCollaborations;
   }
 }

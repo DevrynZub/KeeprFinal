@@ -84,12 +84,13 @@ public class VaultsController : ControllerBase
     }
   }
 
-  [Authorize]
+
   [HttpGet("{vaultId}/keeps")]
   public async Task<ActionResult<List<KeepCollaboration>>> GetKeepsByVaultId(int vaultId)
   {
     try
     {
+      // FIXME throw error in the service if userInfo is null
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       List<KeepCollaboration> keepCollaborations = _vaultKeepsService.GetKeepsByVaultId(vaultId);
       return Ok(keepCollaborations);

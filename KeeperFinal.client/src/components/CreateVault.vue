@@ -28,7 +28,6 @@
 import { ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { vaultService } from '../services/VaultService.js';
-import { Modal } from 'bootstrap';
 
 export default {
   setup() {
@@ -38,6 +37,7 @@ export default {
     return {
       editable,
 
+      // FIXME add route params profile Id here for the check to push into appstate....refer to fixme notes on createKeep
       async createVault() {
         try {
           if (!editable.value.isPrivate) {
@@ -45,7 +45,6 @@ export default {
           }
           await vaultService.createVault(editable.value)
           editable.value = {};
-          Modal.getOrCreateInstance('#createVaultModal').hide()
         } catch (error) {
           return Pop.error(error.message)
 

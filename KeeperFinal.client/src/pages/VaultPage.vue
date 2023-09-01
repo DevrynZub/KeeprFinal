@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { computed, onMounted, watchEffect } from 'vue';
+import { computed, onMounted, popScopeId } from 'vue';
 import { vaultService } from '../services/VaultService.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
@@ -76,14 +76,24 @@ export default {
           if (confirmDelete) {
             await vaultService.removeVault(vault.id);
           }
+          // FIXME add router push
         } catch (error) {
           Pop.error(error.message);
           logger.log(error);
-          if (error.response.data.includes('😂')) {
-            router.push({ name: "Home" });
-          }
+        }
+      },
+
+      async removeVaultKeep(vaultKeepId) {
+        try {
+          const confirmDelete = await Pop.confirm('Remove keep from vault??');
+          if (confirmDelete)
+            await vaultService.removeVaultKeep(vaultKeepId)
+        } catch (error) {
+          Pop.error(error.message);
+          logger.log(error);
         }
       }
+
 
     };
   },

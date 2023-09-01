@@ -39,14 +39,15 @@ export default {
   setup() {
     const editable = ref({});
 
-
+    // FIXME add onMounted and get keeps ... think ab which id to pass to get the keeps for logged in user....you already have this written
 
     watchEffect(() => {
     });
     return {
       editable,
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
+      // FIXME change computed to myVaults
+      vaults: computed(() => AppState.myVaults),
     };
   },
   components: { VaultCard }

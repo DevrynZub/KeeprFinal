@@ -36,7 +36,7 @@
 
 
 <script>
-import { computed, popScopeId, watchEffect } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { AppState } from '../AppState.js';
 import { profileService } from '../services/ProfileService.js';
 import { useRoute } from 'vue-router';
@@ -45,7 +45,6 @@ import Pop from '../utils/Pop.js';
 import VaultCard from '../components/VaultCard.vue';
 import { keepsService } from '../services/KeepsService.js';
 import KeepCard from '../components/KeepCard.vue';
-import { logger } from '../utils/Logger.js';
 
 export default {
   setup() {
@@ -60,7 +59,6 @@ export default {
         Pop.error(error.message);
       }
     }
-
 
     async function getVaultsByProfileId() {
       try {
@@ -81,6 +79,8 @@ export default {
       }
     }
 
+
+
     watchEffect(() => {
       route.params.profileId;
       getProfileById();
@@ -96,16 +96,7 @@ export default {
     };
   },
 
-  async getKeepById(keepId) {
-    try {
-      logger.log('[DO I GET KEEPS]', keepId)
-      const res = await keepsService.getKeepById(keepId);
-      AppState.activeKeep = res.data;
-      AppState.activeKeep.views++;
-    } catch (error) {
-      Pop.error(error.message);
-    }
-  },
+
   components: { VaultCard, KeepCard }
 }
 </script>

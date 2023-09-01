@@ -31,6 +31,7 @@ public class ProfilesService
 
   internal List<Vault> GetProfileVaults(string profileId, string userId)
   {
+    // FIXME check the profileId and userId....FIND ALL the vaults if I am the person...otherwise only return the public vaults
     List<Vault> vaults = null;
     if (userId == null)
     {
