@@ -30,7 +30,6 @@ import { Modal } from "bootstrap"
 
 export default {
   setup() {
-    const account = ref({})
     const editable = ref({})
 
 

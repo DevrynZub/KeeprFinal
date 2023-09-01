@@ -20,12 +20,14 @@ class KeepsService {
   }
 
   // FIXME pass profileId as param here
-  async createKeep(keepData) {
-    const res = await api.post('api/keeps', keepData)
-    logger.log('[CREATED KEEP]', res.data)
-    const newKeep = new Keep(res.data)
+  async createKeep(keepData, profileId) {
+    const res = await api.post('api/keeps', keepData);
+    logger.log('[CREATED KEEP]', res.data);
+    const newKeep = new Keep(res.data);
     // FIXME check to see if the profileId matches the person logged in, if it does push it, if not don't
-    AppState.keeps.push(newKeep)
+    if (profileId === AppState.account.id) {
+      AppState.keeps.push(newKeep);
+    }
   }
 
   async getKeepsByProfileId(profileId) {
@@ -42,8 +44,9 @@ class KeepsService {
     AppState.activeKeep = ''
   }
 
-  async addKeepToVault(vaultKeepId) {
-    const res = await api.post(`api/vaultkeeps`, vaultKeepId)
+  async addKeepToVault(keepId, vaultId) {
+    const newVaultKeep = { "keepId": keepId, "vaultId": vaultId }
+    const res = await api.post(`api/vaultkeeps`, newVaultKeep)
     AppState.activeKeep.kept++
     logger.log('[Added keep to vault]', res.data)
   }

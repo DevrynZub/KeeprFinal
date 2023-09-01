@@ -70,9 +70,13 @@ export default {
       account: computed(() => AppState.account),
       myVaults: computed(() => AppState.myVaults),
 
-      async addKeepToVault() {
+
+
+
+      async addKeepToVault(vaultId) {
         try {
-          await keepsService.addKeepToVault()
+          await keepsService.addKeepToVault(AppState.activeKeep.id, vaultId)
+
         } catch (error) {
           Pop.error(error.message)
         }

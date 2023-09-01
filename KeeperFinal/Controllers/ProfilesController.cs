@@ -44,6 +44,7 @@ public class ProfilesController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
   [HttpGet("{profileId}/vaults")]
   public async Task<ActionResult<Vault>> GetProfileVaults(string profileId)
   {

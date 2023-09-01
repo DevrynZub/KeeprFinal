@@ -3,11 +3,13 @@ public class VaultKeepsService
 {
   private readonly VaultKeepsRepository _vaultKeepsRepository;
   private readonly KeepsService _keepsService;
+  private readonly VaultsService _vaultsService;
 
-  public VaultKeepsService(VaultKeepsRepository vaultKeepsRepository, KeepsService keepsService)
+  public VaultKeepsService(VaultKeepsRepository vaultKeepsRepository, KeepsService keepsService, VaultsService vaultsService)
   {
     _vaultKeepsRepository = vaultKeepsRepository;
     _keepsService = keepsService;
+    _vaultsService = vaultsService;
   }
 
   internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
@@ -37,15 +39,25 @@ public class VaultKeepsService
     return "VaultKeep Removed.";
   }
 
-  internal List<KeepCollaboration> GetKeepsByVaultId(int vaultId)
-
+  internal List<KeepCollaboration> GetKeepsByVaultId(int vaultId, Account user)
   {
-    // FIXME get the vault that we are trying to view the keeps for
-    // FIXME check if the user has access to the OG vault....am i the person who made and is it private
-    List<KeepCollaboration> keepCollaborations = _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
-
-    // vaults = vaults.FindAll(vault => vault.isPrivate == false || vault.CreatorId == userId);
-
-    return keepCollaborations;
+    Vault vaults = _vaultsService.GetVaultById(vaultId);
+    if (vaults.IsPrivate == true)
+    {
+      if (user == null || vaults.CreatorId != user.Id)
+      {
+        throw new Exception("This is a private vault and not yours");
+      }
+      else
+      {
+        return _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
+      }
+    }
+    else
+    {
+      return _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
+    }
+    // // FIXME get the vault that we are trying to view the keeps for
+    // // FIXME check if the user has access to the OG vault....am i the person who made and is it private
   }
 }
