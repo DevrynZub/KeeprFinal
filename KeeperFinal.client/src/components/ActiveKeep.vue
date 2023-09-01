@@ -21,6 +21,7 @@
           <div class="row">
             <div class="col-12 mt-5">
               <div class="dropdown">
+                <button @click="removeVaultKeep(vaultKeepId)">Remove VaultKeep</button>
                 <div class="dropdown">
                   <button class="btn btn-secondary-outline dropdown-toggle fs-3 mb-4" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,6 +55,8 @@ import { Keep } from '../models/Keep.js';
 
 import { keepsService } from '../services/KeepsService.js';
 import Pop from '../utils/Pop.js';
+import { vaultService } from '../services/VaultService.js';
+import { logger } from '../utils/Logger.js';
 
 
 
@@ -69,16 +72,26 @@ export default {
       keep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
       myVaults: computed(() => AppState.myVaults),
-
-
+      vaultKeep: computed(() => AppState.vaultKeep),
 
 
       async addKeepToVault(vaultId) {
         try {
           await keepsService.addKeepToVault(AppState.activeKeep.id, vaultId)
-
         } catch (error) {
           Pop.error(error.message)
+        }
+      },
+
+      async removeVaultKeep(vaultKeepId) {
+        try {
+          const confirmDelete = await Pop.confirm('Remove keep from vault?');
+          if (confirmDelete) {
+            await vaultService.removeVaultKeep(vaultKeepId);
+          }
+        } catch (error) {
+          Pop.error(error.message);
+          logger.log(error);
         }
       }
 

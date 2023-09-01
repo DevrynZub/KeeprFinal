@@ -33,7 +33,7 @@ public class VaultKeepsService
     VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
     if (vaultKeep.AccountId != userId)
     {
-      throw new Exception("Not your vault");
+      throw new Exception("Not your VaultKeep");
     }
     _vaultKeepsRepository.RemoveVaultKeep(vaultKeepId);
     return "VaultKeep Removed.";

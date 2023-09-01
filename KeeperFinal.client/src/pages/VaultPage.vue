@@ -18,9 +18,7 @@
         <KeepCard :keepProp="keep" />
       </div>
     </div>
-    <div v-for="vaultKeep in vaultKeeps" :key="vaultKeep.vaultKeepId">
-      <button @click="removeVaultKeep(vaultKeep.vaultKeepId)">Remove</button>
-    </div>
+
   </div>
 </template>
 
@@ -86,21 +84,6 @@ export default {
         }
       },
 
-      async removeVaultKeep(vaultKeepId) {
-        try {
-          const confirmDelete = await Pop.confirm('Remove keep from vault?');
-          if (confirmDelete) {
-            await vaultService.removeVaultKeep(vaultKeepId);
-            const index = AppState.activeVault.vaultKeeps.findIndex(vk => vk.id === vaultKeepId);
-            if (index !== -1) {
-              AppState.activeVault.vaultKeeps.splice(index, 1);
-            }
-          }
-        } catch (error) {
-          Pop.error(error.message);
-          logger.log(error);
-        }
-      }
 
 
     };
