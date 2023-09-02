@@ -21,7 +21,8 @@
           <div class="row">
             <div class="col-12 mt-5">
               <div class="dropdown">
-                <button @click="removeVaultKeep(vaultKeepId)">Remove VaultKeep</button>
+                <button @click="removeVaultKeep(keep.vaultKeepId)">Remove
+                  VaultKeep</button>
                 <div class="dropdown">
                   <button class="btn btn-secondary-outline dropdown-toggle fs-3 mb-4" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">

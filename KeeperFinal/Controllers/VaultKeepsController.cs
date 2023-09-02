@@ -29,7 +29,7 @@ public class VaultKeepsController : ControllerBase
       }
       vaultKeepData.CreatorId = userInfo.Id;
       vaultKeepData.AccountId = userInfo.Id;
-      VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
+      VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData, vaultKeepData.KeepId);
       return Ok(vaultKeep);
     }
     catch (Exception e)

@@ -12,7 +12,7 @@ export class Keep {
     this.createdAt = data.createdAt
     this.updatedAt = data.updatedAt
     this.creator = data.creator
-
+    this.vaultKeepId = data.vaultKeepId
   }
 }
 

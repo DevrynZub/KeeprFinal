@@ -12,9 +12,12 @@ public class VaultKeepsService
     _vaultsService = vaultsService;
   }
 
-  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
+  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, int keepId)
   {
     VaultKeep vaultKeep = _vaultKeepsRepository.CreateVaultKeep(vaultKeepData);
+
+    _keepsService.GetKeepByIdAndIncreaseKept(keepId);
+
     return vaultKeep;
   }
 
@@ -48,15 +51,9 @@ public class VaultKeepsService
       {
         throw new Exception("This is a private vault and not yours");
       }
-      else
-      {
-        return _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
-      }
     }
-    else
-    {
-      return _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
-    }
+
+    return _vaultKeepsRepository.GetKeepsByVaultId(vaultId);
     // // FIXME get the vault that we are trying to view the keeps for
     // // FIXME check if the user has access to the OG vault....am i the person who made and is it private
   }

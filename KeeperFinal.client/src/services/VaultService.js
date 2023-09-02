@@ -51,8 +51,11 @@ class VaultService {
   async removeVaultKeep(vaultKeepId) {
     const res = await api.delete(`api/vaultkeeps/${vaultKeepId}`);
     logger.log('[You removed a keep from this vault]', res.data);
-    const vaultKeepIndex = AppState.vaultKeep.findIndex(vaultkeep => vaultkeep.id == vaultKeepId)
-    AppState.vaultKeeps.splice(vaultKeepIndex, 1)
+    const keepIndex = AppState.keeps.findIndex(keep => keep.vaultKeepId == vaultKeepId)
+    if (keepIndex == -1) {
+      throw new Error(`This id is bad: ${vaultKeepId}`)
+    }
+    AppState.keeps.splice(keepIndex, 1)
 
   }
 
