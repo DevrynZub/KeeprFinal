@@ -1,3 +1,4 @@
+-- Active: 1695249200957@@34.220.170.12@3306@Keepr
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',

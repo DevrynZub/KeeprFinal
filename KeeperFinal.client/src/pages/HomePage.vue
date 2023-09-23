@@ -1,11 +1,7 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-      </div>
-    </div>
-    <div class="row p-2">
-      <div class="col-md-4 col-12 mb-3" v-for="keep in keeps" :key="keep.id">
+  <div>
+    <div class="masonry-with-columns mt-3">
+      <div v-for="keep in keeps" :key="keep.id">
         <KeepCard :keepProp="keep" />
       </div>
     </div>
@@ -50,4 +46,25 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+  div {
+    width: 100px;
+    margin: 0 .5rem 1rem 0;
+    display: inline-block;
+    width: 94%;
+    text-align: center;
+    border-radius: 3%;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .masonry-with-columns {
+    columns: 2 100px;
+    column-gap: 1rem;
+  }
+}
+</style>
